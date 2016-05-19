@@ -25,7 +25,11 @@ $this->registerJs($this->render('_script.js'));
         <div class="col-sm-6">
             <?= $form->field($model, 'name')->textInput(['maxlength' => 128]) ?>
 
-            <?= $form->field($model, 'parent_name')->textInput(['id' => 'parent_name']) ?>
+             <?php echo $form->field($model, 'parent_name')->dropdownList(
+                $model::find()->select(["CONCAT(id, ' - ',`name` ) as menuname", 'id'])
+	         ->indexBy('id')->column(),
+                ['prompt'=>'parent_name']
+                );
 
             <?= $form->field($model, 'route')->textInput(['id' => 'route']) ?>
         </div>
